@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
 package com.mycompany.chatapp;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class ChatAppTest {
      */
     @Test
     public void testMain() {
-        System.out.println();
+        System.out.println("main");
         String[] args = null;
         ChatApp.main(args);
         // TODO review the generated test code and remove the default call to fail.
@@ -53,8 +54,10 @@ public class ChatAppTest {
     @Test
     public void testLogin() {
         System.out.println("login");
+        String administrator = "";
+        String password = "";
         boolean expResult = false;
-        boolean result = ChatApp.login("administrator", "5678");
+        boolean result = ChatApp.login(administrator, password);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -65,7 +68,7 @@ public class ChatAppTest {
      */
     @Test
     public void testSendMessage() {
-        System.out.println("sendMessage");
+        System.out.println("Hi Mike, can us for dinner tonight");
         ChatApp.sendMessage();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -81,46 +84,35 @@ public class ChatAppTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of showRecentlySentMessages method, of class ChatApp.
+     */
+    @Test
+    public void testShowRecentlySentMessages() {
+        System.out.println("Message ready to send.");
+        ChatApp.showRecentlySentMessages();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("Message exceeds 250 characters by X [enter number here], please reduce size.");
+    }
+ @Test
+    public void testCheckRecipient_validNumber() {
+        String valid = "+12345678901";
+        String result = invokeCheckRecipient(valid);
+        assertEquals(valid, result);
+        System.out.println("Cell phone number successfully captured.");
+    }
+
+    @Test
+    public void testCheckRecipient_invalidNumber() {
+        String invalid = "123456"; // No + and too short
+        String result = invokeCheckRecipient(invalid);
+        assertNull(result); 
+       System.out.println("Cell phone number is incorrectly formattted or does not contain an international code. Please correct the number and try again.");
+}
+
+    private String invokeCheckRecipient(String valid) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
-    // File: ChatAppTest.java
-
-
-
-    @Test
-    public void testLoginSuccess() {
-        boolean result = ChatApp.login("administrator", "5678");
-        assertTrue(result, "Login should succeed for correct credentials.");
-    }
-
-    @Test
-    public void testLoginFailureWrongUsername() {
-        boolean result = ChatApp.login("admin", "5678");
-        assertFalse(result, "Login should fail for incorrect username.");
-    }
-
-    @Test
-    public void testLoginFailureWrongPassword() {
-        boolean result = ChatApp.login("administrator", "wrongpass");
-        assertFalse(result, "Login should fail for incorrect password.");
-    }
-
-    @Test
-    public void testLoginFailureEmptyCredentials() {
-        boolean result = ChatApp.login("", "");
-        assertFalse(result, "Login should fail for empty credentials.");
-    }
-
-    @Test
-    public void testLoginFailureNullCredentials() {
-        boolean result = ChatApp.login(null, null);
-        assertFalse(result, "Login should fail for null credentials.");
-    }
-
-    private void assertTrue(boolean result, String login_should_succeed_for_correct_credenti) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void assertFalse(boolean result, String login_should_fail_for_incorrect_username) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

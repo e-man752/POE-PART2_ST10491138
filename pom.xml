@@ -27,6 +27,30 @@
             <scope>test</scope>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.hop</groupId>
+            <artifactId>hop-ui</artifactId>
+            <version>2.14.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>cn.benma666</groupId>
+            <artifactId>kettle-ui-swt</artifactId>
+            <version>8.3.0.0-0.2.5</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.anylogic</groupId>
+            <artifactId>alogic-core</artifactId>
+            <version>1.6.17</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>io.atlassian</groupId>
+            <artifactId>kadai-logging-json_2.10</artifactId>
+            <version>3.3.4</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>
 

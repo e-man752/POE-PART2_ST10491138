@@ -19,25 +19,33 @@ public class ChatApp {
     private static int Total_messages = 0;
     private static int Message_count;
     private static int messageCounter = 0;
-    private static final JSONArray messageStorage = new JSONArray();
+    static final JSONArray messageStorage = new JSONArray();
 
     public static void main(String[] args) {
+        
+        while (!exit) {
         String[] Options = {"Send message", "Show Recently Sent Message", "Quit"};
         int Choice = JOptionPane.showOptionDialog(null, "Choose an option:", "QuickChat Menu",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, Options, Options[0]);
         
         switch (Choice) {
-            case 1 -> //Coming soon
-                 JOptionPane.showMessageDialog(null, "Coming Soon.");
-            case 2 -> //Quit
+            case 1: sendMessage();
+            break;
+            case 2: showRecentlySentMessages();
+            break;
+             case 3: //Quit
                 exit = true;
-            default -> JOptionPane.showMessageDialog(null,"Invalid Option.");
+                break;
+             default: JOptionPane.showMessageDialog(null,"Invalid Option.");
+             break;
         }
         
 JOptionPane.showMessageDialog(null, "Total Message sent: " + Total_messages);
+    saveMessagesToJSON();
+        }
     }
     
-    static boolean login(String administrator, String string) {
+     static boolean login(String administrator, String password) {
         String User_name = JOptionPane.showInputDialog("Enter Username:");
         String pass_word = JOptionPane.showInputDialog("Enter passsword:");
         
@@ -52,11 +60,11 @@ JOptionPane.showMessageDialog(null, "Total Message sent: " + Total_messages);
         long messageId = 10000000000L + new Random().nextInt(900000000);
         messageCounter++;
         
+        
         String recipient = JOptionPane.showInputDialog("Enter recipient number (+CCXXXXXXXXXX) :");
-        if (recipient == null || !recipient.matches("\\+\\d{9,12}")) {
-            JOptionPane.showMessageDialog(null,"Invalid number. Must include international code and be <= 12 digits.");
-            return;
-        }
+        recipient = CheckRecipient(recipient); 
+        if (recipient == null) return; //If
+        
         String message = JOptionPane.showInputDialog("Enter your message (max 250 chars) :");
         if (message == null || message.length() > 250) {
              JOptionPane.showMessageDialog(null,"Please enter a message of less than 250 characters.");
@@ -83,7 +91,7 @@ JOptionPane.showMessageDialog(null, "Total Message sent: " + Total_messages);
        
        JSONObject jsonMessage = new JSONObject();
        jsonMessage.put("MessageID", messageId);
-       //jsonMessage.put("MessageHash", hash);
+       jsonMessage.put("MessageHash", hash);
        jsonMessage.put("Recipient", recipient);
        jsonMessage.put("Message", message);
        
@@ -99,7 +107,7 @@ JOptionPane.showMessageDialog(null, "Total Message sent: " + Total_messages);
                """
                Message Sent!
                Message ID: """ + messageId + "\n" +
-                       //"Message Hash: " + hash + "\n" +
+                       "Message Hash: " + hash + "\n" +
                        "Recipient: " + recipient + "\n" +
                        "Message: " + message);
     }
@@ -115,5 +123,32 @@ JOptionPane.showMessageDialog(null, "Total Message sent: " + Total_messages);
             
         }
     }
-    
+    private static String CheckRecipient(String recipient) {
+        if (recipient == null || !recipient.matches("\\+\\d{9,12}")) {
+            JOptionPane.showMessageDialog(null,"Invalid number. Must include international code and be <= 12 digits.");
+            return null;
+        
+    }
+        return recipient;
+    }
+
+    static void showRecentlySentMessages() {
+     if (messageStorage.isEmpty()) {
+         JOptionPane.showMessageDialog(null,"No message has been sent");
+         return;
+     }
+     
+     StringBuilder output = new StringBuilder("Stored Messages:\n\n");
+     for (Object obj : messageStorage) {
+         JSONObject msg = (JSONObject) obj;
+         output.append("ID: ").append(msg.get("MessageID")).append("\n")
+                 .append("Recipient: ").append(msg.get("Recipient")).append("\n")
+                 .append("Message: ").append(msg.get("Message")).append("\n")
+                 .append("---\n");
+     }
+     JOptionPane.showMessageDialog(null, output.toString());
+  }
 }
+    
+
+
